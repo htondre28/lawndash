@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lawn Care OS — Premium Dashboard</title>
+  
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            neutral: {
+              950: '#0a0f0b',
+            }
+          },
+          boxShadow: {
+            'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.4)',
+            'glass-inset': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Glassmorphism Properties */
+    .glass-panel {
+      background: rgba(15, 27, 18, 0.55);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    }
+    
+    .glass-panel-heavy {
+      background: rgba(10, 18, 12, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-input {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .glass-input:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(34, 197, 94, 0.6);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+      outline: none;
+    }
+
+    /* Custom Scrollbar for sleek UI look */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(34, 197, 94, 0.4);
+    }
+
+    /* High legibility contrast focus styling */
+    *:focus-visible {
+      outline: 2px solid #22c55e !important;
+      outline-offset: 2px !important;
+    }
+
+    /* Keyframes for ultra-smooth entrance animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-delay: 0s !important;
+        animation-duration: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0s !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100 min-h-screen relative font-sans overflow-x-hidden antialiased">
+
+  <!-- Full-screen dynamic blurred striped lawn background -->
+  <div class="fixed inset-0 -z-50 h-screen w-screen overflow-hidden">
+    <div 
+      class="absolute inset-0 bg-cover bg-center scale-105 filter blur-[2px]" 
+      style="background-image: url('https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSTIpWZzZMH1GhG67m_Yy25DBgE5OjQUzC3CcAvhnV9ReXbXWNWtWul614UjQrc7voeXSxfpZXq0w7SMFI');"
+      role="img"
+      aria-label="Freshly mown dark and light green grass stripes under bright sunlight"
+    ></div>
+    <!-- High-end elegant dark gradient overlay to ensure perfect AA text contrast -->
+    <div class="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/70 to-neutral-950/90"></div>
+  </div>
+
+  <!-- SKIP TO MAIN CONTENT LINK FOR ACCESSIBILITY -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-emerald-500 text-neutral-950 px-4 py-2 rounded-xl font-bold">
+    Skip to main content
+  </a>
+
+  <!-- ==================== LOGIN SCREEN ==================== -->
+  <div id="login-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/90 backdrop-blur-md transition-all duration-500">
+    <div class="w-full max-w-md glass-panel p-8 rounded-2xl shadow-glass flex flex-col gap-6 animate-fade-in">
+      <div class="flex flex-col items-center gap-3 text-center">
+        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+          <i data-lucide="sprout" class="h-8 w-8 animate-pulse"></i>
+        </div>
+        <h1 class="text-2xl font-bold tracking-tight text-white">Lawn Care Operating System</h1>
+        <p class="text-sm text-neutral-400">Secure gateway authentication for professional operators</p>
+      </div>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-password" class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">Gate Passcode</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="login-password" 
+              class="w-full glass-input rounded-xl pl-4 pr-10 py-3 text-sm focus:ring-2 focus:ring-emerald-500" 
+              placeholder="Enter operator passcode"
+              required
+            >
+            <button 
+              type="button" 
+              id="toggle-password" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white focus:outline-none"
+              aria-label="Toggle password visibility"
+            >
+              <i data-lucide="eye" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="login-error" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/20 p-3 rounded-lg flex items-center gap-2">
+          <i data-lucide="alert-circle" class="h-4 w-4 shrink-0"></i>
+          <span>Incorrect passcode. Access denied.</span>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full flex items-center justify-center gap-2 py-3.5 px-4 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-neutral-950 font-semibold rounded-xl text-sm transition-all duration-200"
+        >
+          <i data-lucide="key-round" class="h-4 w-4"></i>
+          <span>Authenticate Operator Session</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN DASHBOARD PORTAL ==================== -->
+  <div id="dashboard-portal" class="hidden min-h-screen pb-16">
+    
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="border-b border-white/5 py-5 mb-8 backdrop-blur-md sticky top-0 z-30 bg-neutral-950/20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400" aria-hidden="true">
+            <i data-lucide="leaf" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              Lawn Care OS
+            </h1>
+            <p class="text-xs text-neutral-400 font-medium">Premium Lawn Management Portal</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 self-end sm:self-auto">
+          <!-- Real-Time Date and Clock Card -->
+          <div class="flex flex-col text-right">
+            <span id="live-clock" class="text-sm font-semibold text-white tracking-wide tabular-nums">12:00:00 PM</span>
+            <span id="live-date" class="text-xs text-neutral-400">Loading system date...</span>
+          </div>
+
+          <!-- Vertical separator line -->
+          <div class="h-8 w-px bg-white/10" aria-hidden="true"></div>
+
+          <!-- Premium Logout Button -->
+          <button 
+            id="logout-button" 
+            class="flex items-center gap-2 h-10 px-4 rounded-xl bg-white/5 hover:bg-rose-500/10 hover:text-rose-400 border border-white/5 hover:border-rose-500/20 text-neutral-400 transition-all duration-200"
+            aria-label="Logout current session"
+          >
+            <i data-lucide="log-out" class="h-4 w-4"></i>
+            <span class="text-xs font-semibold hidden sm:inline">Logout</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- MAIN PORTAL GRID CONTAINER -->
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- HERO WELCOME BANNER -->
+      <section class="mb-8" aria-label="Welcome banner">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6 overflow-hidden relative">
+          <div class="absolute inset-0 -z-10 bg-gradient-to-r from-emerald-500/10 to-transparent opacity-40"></div>
+          <div class="space-y-2">
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Welcome back, Chief Operator!</h2>
+            <p class="text-sm text-neutral-300 max-w-2xl">
+              All systems operational. Optimize your daily workflow, monitor scheduling, check live weather, and manage high-quality turf maintenance jobs.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 self-start md:self-auto px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl text-xs font-bold uppercase tracking-wider">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+            Live Connection Online
+          </div>
+        </div>
+      </section>
+
+      <!-- FIRST GRID ROW: OPERATING CAPITAL & LIVE WEATHER + DAILY TASKS -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        
+        <!-- COLUMN 1: METRICS & WEATHER -->
+        <div class="lg:col-span-1 flex flex-col gap-6">
+          
+          <!-- OPERATING BALANCE CARD -->
+          <section class="glass-panel p-6 rounded-2xl flex flex-col justify-between" aria-labelledby="balance-title">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <i data-lucide="wallet" class="h-4.5 w-4.5 text-emerald-400"></i>
+                <h3 id="balance-title" class="text-xs font-semibold tracking-widest text-neutral-400 uppercase">Operating Balance</h3>
+              </div>
+              
+              <!-- Editing Control Switches -->
+              <div id="balance-actions">
+                <button 
+                  id="btn-edit-balance" 
+                  class="rounded-lg p-1.5 hover:bg-white/5 text-neutral-400 hover:text-white transition-all"
+                  aria-label="Edit operating balance"
+                >
+                  <i data-lucide="edit-3" class="h-4 w-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Display/Edit Views -->
+            <div class="relative min-h-[64px] flex items-center">
+              <!-- View State -->
+              <div id="balance-view-state" class="flex items-baseline gap-1">
+                <span class="text-3xl font-light text-neutral-400">$</span>
+                <span id="balance-display-value" class="text-5xl font-bold tracking-tight text-white">661.00</span>
+              </div>
+
+              <!-- Edit State -->
+              <div id="balance-edit-state" class="hidden w-full flex items-center gap-2">
+                <span class="text-3xl font-light text-neutral-400">$</span>
+                <input 
+                  type="number" 
+                  id="balance-input" 
+                  step="0.01" 
+                  min="0"
+                  class="w-full glass-input rounded-xl px-3 py-2 text-2xl font-bold"
+                  aria-label="Operating balance amount"
+                >
+                <div class="flex items-center gap-1">
+                  <button 
+                    id="btn-save-balance" 
+                    class="p-2 bg-emerald-500 hover:bg-emerald-400 text-neutral-950 rounded-xl transition-all"
+                    aria-label="Save operating balance"
+                  >
+                    <i data-lucide="check" class="h-4.5 w-4.5"></i>
+                  </button>
+                  <button 
+                    id="btn-cancel-balance" 
+                    class="p-2 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-all"
+                    aria-label="Cancel editing"
+                  >
+                    <i data-lucide="x" class="h-4.5 w-4.5"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- LIVE WEATHER CARD (Bloomingdale, FL) -->
+          <section class="glass-panel p-6 rounded-2xl flex flex-col justify-between" aria-labelledby="weather-title">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <i data-lucide="cloud-sun" class="h-4.5 w-4.5 text-emerald-400"></i>
+                <h3 id="weather-title" class="text-xs font-semibold tracking-widest text-neutral-400 uppercase">Live Weather</h3>
+              </div>
+              <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Bloomingdale, FL</span>
+            </div>
+
+            <div id="weather-content" class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span id="weather-temp" class="text-4xl font-extrabold text-white tracking-tight tabular-nums">78°F</span>
+                  <p id="weather-condition" class="text-xs font-medium text-neutral-300 mt-0.5">Optimal mowing conditions</p>
+                </div>
+                <div id="weather-icon-container" class="text-emerald-400">
+                  <i data-lucide="sun" class="h-10 w-10 animate-spin" style="animation-duration: 12s;"></i>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2 border-t border-white/5 pt-4 text-center">
+                <div class="space-y-1">
+                  <p class="text-[9px] text-neutral-400 font-bold uppercase tracking-wider">Humidity</p>
+                  <p id="weather-humidity" class="text-xs font-semibold text-white">62%</p>
+                </div>
+                <div class="space-y-1">
+                  <p class="text-[9px] text-neutral-400 font-bold uppercase tracking-wider">Wind</p>
+                  <p id="weather-wind" class="text-xs font-semibold text-white">8 mph</p>
+                </div>
+                <div class="space-y-1">
+                  <p class="text-[9px] text-neutral-400 font-bold uppercase tracking-wider">Rain %</p>
+                  <p id="weather-rain" class="text-xs font-semibold text-white">0%</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- COLUMN 2: DAILY TASK MANAGER -->
+        <section class="lg:col-span-2 glass-panel p-6 rounded-2xl flex flex-col justify-between" aria-labelledby="tasks-title">
+          <div>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 pb-4 border-b border-white/5">
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-square" class="h-5 w-5 text-emerald-400"></i>
+                <h3 id="tasks-title" class="text-lg font-bold text-white tracking-tight">Today&apos;s Lawn Tasks</h3>
+              </div>
+              <span id="task-counter" class="self-start sm:self-auto text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">
+                0 remaining
+              </span>
+            </div>
+
+            <!-- TASK CREATION FORM -->
+            <form id="task-form" class="grid grid-cols-1 md:grid-cols-12 gap-3 mb-6">
+              <div class="md:col-span-5">
+                <label for="task-input-title" class="sr-only">Task Title</label>
+                <input 
+                  type="text" 
+                  id="task-input-title" 
+                  placeholder="Task title (e.g., Cut Smith yard)" 
+                  class="w-full glass-input rounded-xl px-4 py-2.5 text-sm"
+                  required
+                >
+              </div>
+              <div class="md:col-span-4">
+                <label for="task-input-desc" class="sr-only">Description</label>
+                <input 
+                  type="text" 
+                  id="task-input-desc" 
+                  placeholder="Add description" 
+                  class="w-full glass-input rounded-xl px-4 py-2.5 text-sm"
+                >
+              </div>
+              <div class="md:col-span-3 flex gap-2">
+                <label for="task-input-date" class="sr-only">Due Date</label>
+                <input 
+                  type="date" 
+                  id="task-input-date" 
+                  class="w-full glass-input rounded-xl px-3 py-2.5 text-xs text-neutral-300"
+                  required
+                >
+                <button 
+                  type="submit" 
+                  class="bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold px-4 rounded-xl transition-all duration-200 flex items-center justify-center shrink-0"
+                  aria-label="Add task"
+                >
+                  <i data-lucide="plus" class="h-5 w-5"></i>
+                </button>
+              </div>
+            </form>
+
+            <!-- TASKS SCROLL CONTAINER -->
+            <div id="tasks-container" class="space-y-3 max-h-[310px] overflow-y-auto pr-2" role="list">
+              <!-- Tasks rendered dynamically here -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- SECOND GRID ROW: INTERACTIVE MONTHLY CALENDAR & OPERATIONAL NOTES -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- COLUMN 1 & 2: CALENDAR -->
+        <section class="lg:col-span-2 glass-panel p-6 rounded-2xl" aria-labelledby="calendar-title">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar" class="h-5 w-5 text-emerald-400"></i>
+              <h3 id="calendar-title" class="text-lg font-bold text-white tracking-tight">Monthly Schedule</h3>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-white/5 p-1 rounded-xl border border-white/5">
+              <button 
+                id="btn-prev-month" 
+                class="p-1.5 hover:text-white text-neutral-400 hover:bg-white/5 rounded-lg transition-all"
+                aria-label="Previous Month"
+              >
+                <i data-lucide="chevron-left" class="h-4 w-4"></i>
+              </button>
+              <span id="calendar-month-indicator" class="text-xs font-semibold text-white px-2 tracking-wide uppercase">
+                August 2026
+              </span>
+              <button 
+                id="btn-next-month" 
+                class="p-1.5 hover:text-white text-neutral-400 hover:bg-white/5 rounded-lg transition-all"
+                aria-label="Next Month"
+              >
+                <i data-lucide="chevron-right" class="h-4 w-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- CALENDAR GRID HEADER -->
+          <div class="grid grid-cols-7 gap-2 text-center text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3" aria-hidden="true">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+
+          <!-- CALENDAR DAYS GRID -->
+          <div id="calendar-days" class="grid grid-cols-7 gap-2">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- COLUMN 3: OPERATIONAL NOTES -->
+        <section class="lg:col-span-1 glass-panel p-6 rounded-2xl flex flex-col justify-between" aria-labelledby="notes-title">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
+              <div class="flex items-center gap-2">
+                <i data-lucide="file-text" class="h-4.5 w-4.5 text-emerald-400"></i>
+                <h3 id="notes-title" class="text-lg font-bold text-white tracking-tight">Operational Notes</h3>
+              </div>
+              <span id="notes-status" class="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider transition-all duration-300">
+                Saved
+              </span>
+            </div>
+
+            <textarea 
+              id="notes-textarea" 
+              class="w-full h-[260px] bg-white/3 border border-white/5 rounded-xl p-4 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none font-mono"
+              placeholder="Record gate codes, clients' yard specifications, mower maintenance logs, and chemical treatment formulas..."
+              aria-label="Operational notes editor"
+            ></textarea>
+          </div>
+          <div class="text-[10px] text-neutral-500 mt-2 italic flex items-center gap-1.5 font-medium">
+            <i data-lucide="clock" class="h-3 w-3"></i> Real-time database synchronizer active
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ==================== CALENDAR ADD EVENT MODAL ==================== -->
+  <div id="event-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/80 backdrop-blur-sm transition-all duration-300">
+    <div class="w-full max-w-md glass-panel-heavy p-6 rounded-2xl shadow-glass flex flex-col gap-5 animate-fade-in" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="flex items-center justify-between pb-3 border-b border-white/5">
+        <h4 id="modal-title" class="text-base font-bold text-white">Daily Job Schedule</h4>
+        <button id="btn-close-modal" class="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-all" aria-label="Close dialog">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <p id="modal-selected-date" class="text-xs font-semibold text-emerald-400 tracking-wider uppercase"></p>
+        
+        <!-- Job event list for the day -->
+        <div class="space-y-2">
+          <p class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Scheduled Jobs</p>
+          <div id="modal-event-list" class="space-y-2 max-h-[140px] overflow-y-auto pr-2">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Add job inputs -->
+        <form id="modal-event-form" class="space-y-3 pt-3 border-t border-white/5">
+          <p class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Add Job to This Day</p>
+          <div>
+            <label for="event-title-input" class="sr-only">Job Description</label>
+            <input 
+              type="text" 
+              id="event-title-input" 
+              placeholder="e.g., Mow front yard / Trim hedges" 
+              class="w-full glass-input rounded-xl px-3 py-2 text-sm"
+              required
+            >
+          </div>
+          <div class="flex gap-2">
+            <div class="w-1/2">
+              <label for="event-time-input" class="sr-only">Start Time</label>
+              <input 
+                type="time" 
+                id="event-time-input" 
+                class="w-full glass-input rounded-xl px-3 py-2 text-xs"
+                required
+              >
+            </div>
+            <div class="w-1/2">
+              <label for="event-color-input" class="sr-only">Color Category</label>
+              <select id="event-color-input" class="w-full glass-input rounded-xl px-3 py-2 text-xs">
+                <option value="#22c55e" class="bg-neutral-900 text-emerald-400">Green (Mowing)</option>
+                <option value="#3b82f6" class="bg-neutral-900 text-blue-400">Blue (Fertilizing)</option>
+                <option value="#f59e0b" class="bg-neutral-900 text-amber-400">Orange (Aeration)</option>
+                <option value="#ec4899" class="bg-neutral-900 text-pink-400">Pink (Maintenance)</option>
+              </select>
+            </div>
+          </div>
+          <button 
+            type="submit" 
+            class="w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold rounded-xl text-xs uppercase tracking-wider transition-all"
+          >
+            Schedule Job
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LOGICAL CLIENT ENGINE ==================== -->
+  <script>
+    // State Model Definition
+    const state = {
+      isAuthenticated: false,
+      balance: 661.00,
+      tasks: [],
+      calendarEvents: [],
+      notes: "",
+      currentDate: new Date(),
+      selectedModalDate: null,
+    };
+
+    // Load configurations/credentials mock
+    const GATEWAY_PASSCODE = "lawncare2026";
+
+    // Standardized LocalStorage State Synchronizer
+    function saveToStorage() {
+      localStorage.setItem("lawncare_balance", JSON.stringify(state.balance));
+      localStorage.setItem("lawncare_tasks", JSON.stringify(state.tasks));
+      localStorage.setItem("lawncare_calendar_events", JSON.stringify(state.calendarEvents));
+      localStorage.setItem("lawncare_notes", JSON.stringify(state.notes));
+      localStorage.setItem("lawncare_auth_session", JSON.stringify(state.isAuthenticated));
+    }
+
+    function loadFromStorage() {
+      if (localStorage.getItem("lawncare_balance")) {
+        state.balance = parseFloat(JSON.parse(localStorage.getItem("lawncare_balance")));
+      }
+      if (localStorage.getItem("lawncare_tasks")) {
+        state.tasks = JSON.parse(localStorage.getItem("lawncare_tasks"));
+      } else {
+        // Fallback default tasks for beautiful rendering
+        state.tasks = [
+          { id: "task-1", title: "Mow and stripe Cooper Estate front lawn", description: "Use Exmark Lazer Z, 3.5-inch cut height", dueDate: "2026-07-15", priority: "high", completed: false },
+          { id: "task-2", title: "Apply nitrogen fertilizer on Baker putting green", description: "Granular spreader, rate 0.5 lbs/1000 sq ft", dueDate: "2026-07-15", priority: "medium", completed: true },
+          { id: "task-3", title: "Clean and sharpen blade assembly on zero-turn", description: "Torque to 50 ft-lbs, check hydraulic fluids", dueDate: "2026-07-16", priority: "low", completed: false }
+        ];
+      }
+      if (localStorage.getItem("lawncare_calendar_events")) {
+        state.calendarEvents = JSON.parse(localStorage.getItem("lawncare_calendar_events"));
+      } else {
+        // Fallback default events
+        state.calendarEvents = [
+          { id: "event-1", title: "Cut Carter Estate", date: "2026-07-12", time: "08:30", color: "#22c55e" },
+          { id: "event-2", title: "Overseeding Green", date: "2026-07-15", time: "10:00", color: "#3b82f6" },
+          { id: "event-3", title: "Irrigation Repair", date: "2026-07-15", time: "14:15", color: "#ec4899" },
+          { id: "event-4", title: "Mow West Side Plaza", date: "2026-07-20", time: "07:00", color: "#22c55e" }
+        ];
+      }
+      if (localStorage.getItem("lawncare_notes")) {
+        state.notes = JSON.parse(localStorage.getItem("lawncare_notes"));
+      } else {
+        state.notes = "SMITH PROPERTY GATE CODE: #8821\nBACKYARD HAS DOG: Make sure gate is latched shut!\n\nEQUIPMENT SPECS:\n- Exmark Lazer Z: Mows best at 3.5\" \n- Trim lines: Always reverse-clock on fence guards\n- Fertilizer settings: Scots EdgeGuard setting 4.5";
+      }
+      if (localStorage.getItem("lawncare_auth_session")) {
+        state.isAuthenticated = JSON.parse(localStorage.getItem("lawncare_auth_session"));
+      }
+    }
+
+    // Dynamic Header Date & Time Clock
+    function runLiveClock() {
+      const clockEl = document.getElementById("live-clock");
+      const dateEl = document.getElementById("live-date");
+
+      function tick() {
+        const now = new Date();
+        clockEl.textContent = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true });
+        dateEl.textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+      }
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    // Authentic Client Gateway (Login Screen Logic)
+    function initializeAuth() {
+      const loginScreen = document.getElementById("login-screen");
+      const dashboardPortal = document.getElementById("dashboard-portal");
+      const loginForm = document.getElementById("login-form");
+      const loginPassword = document.getElementById("login-password");
+      const togglePassword = document.getElementById("toggle-password");
+      const loginError = document.getElementById("login-error");
+      const logoutBtn = document.getElementById("logout-button");
+
+      // Password visibilty toggler
+      togglePassword.addEventListener("click", () => {
+        const isPass = loginPassword.type === "password";
+        loginPassword.type = isPass ? "text" : "password";
+        const icon = togglePassword.querySelector('i');
+        icon.setAttribute("data-lucide", isPass ? "eye-off" : "eye");
+        lucide.createIcons();
+      });
+
+      function grantAccess() {
+        state.isAuthenticated = true;
+        saveToStorage();
+        loginScreen.classList.add("opacity-0", "pointer-events-none");
+        setTimeout(() => loginScreen.classList.add("hidden"), 500);
+        dashboardPortal.classList.remove("hidden");
+        runLiveClock();
+        initializePortalState();
+      }
+
+      // Check current session state
+      if (state.isAuthenticated) {
+        grantAccess();
+      }
+
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (loginPassword.value === GATEWAY_PASSCODE) {
+          loginError.classList.add("hidden");
+          grantAccess();
+        } else {
+          loginError.classList.remove("hidden");
+          loginPassword.value = "";
+          loginPassword.focus();
+        }
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        state.isAuthenticated = false;
+        saveToStorage();
+        window.location.reload();
+      });
+    }
+
+    // ==================== OPERATING PORTAL INITIALIZATION & STATE ENGINE ====================
+    function initializePortalState() {
+      // Setup elements
+      initBalanceCard();
+      initWeatherCard();
+      initTasksManager();
+      initCalendarEngine();
+      initNotesManager();
+    }
+
+    // 1. Balance Card Logic
+    function initBalanceCard() {
+      const balanceDisplay = document.getElementById("balance-display-value");
+      const balanceInput = document.getElementById("balance-input");
+      const viewState = document.getElementById("balance-view-state");
+      const editState = document.getElementById("balance-edit-state");
+      
+      const btnEdit = document.getElementById("btn-edit-balance");
+      const btnSave = document.getElementById("btn-save-balance");
+      const btnCancel = document.getElementById("btn-cancel-balance");
+
+      function updateUI() {
+        balanceDisplay.textContent = state.balance.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        balanceInput.value = state.balance.toFixed(2);
+      }
+
+      btnEdit.addEventListener("click", () => {
+        viewState.classList.add("hidden");
+        editState.classList.remove("hidden");
+        btnEdit.classList.add("hidden");
+        balanceInput.focus();
+      });
+
+      function saveChanges() {
+        const val = parseFloat(balanceInput.value);
+        if (!isNaN(val) && val >= 0) {
+          state.balance = val;
+          saveToStorage();
+          updateUI();
+          viewState.classList.remove("hidden");
+          editState.classList.add("hidden");
+          btnEdit.classList.remove("hidden");
+        } else {
+          balanceInput.classList.add("border-rose-500", "focus:ring-rose-500/50");
+          setTimeout(() => balanceInput.classList.remove("border-rose-500", "focus:ring-rose-500/50"), 1500);
+        }
+      }
+
+      btnSave.addEventListener("click", saveChanges);
+      btnCancel.addEventListener("click", () => {
+        updateUI();
+        viewState.classList.remove("hidden");
+        editState.classList.add("hidden");
+        btnEdit.classList.remove("hidden");
+      });
+
+      balanceInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") saveChanges();
+        if (e.key === "Escape") btnCancel.click();
+      });
+
+      updateUI();
+    }
+
+    // 2. Weather System (Querying Open-Meteo for Bloomingdale, FL)
+    async function initWeatherCard() {
+      const tempEl = document.getElementById("weather-temp");
+      const condEl = document.getElementById("weather-condition");
+      const humidityEl = document.getElementById("weather-humidity");
+      const windEl = document.getElementById("weather-wind");
+      const rainEl = document.getElementById("weather-rain");
+      const iconContainer = document.getElementById("weather-icon-container");
+
+      const lat = "27.8936";
+      const lon = "-82.2604";
+
+      try {
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch`);
+        if (!response.ok) throw new Error("API Offline");
+        const data = await response.json();
+        
+        const current = data.current;
+        const temp = Math.round(current.temperature_2m);
+        const humidity = Math.round(current.relative_humidity_2m);
+        const wind = Math.round(current.wind_speed_10m);
+        const precip = current.precipitation;
+        const code = current.weather_code;
+
+        // Interpret Weather Code to Description & Icon
+        let description = "Clear Mowing Day";
+        let iconMarkup = '<i data-lucide="sun" class="h-10 w-10 animate-spin" style="animation-duration: 15s;"></i>';
+
+        if (code === 0) {
+          description = "Sunny & Clear Mowing Conditions";
+          iconMarkup = '<i data-lucide="sun" class="h-10 w-10 text-amber-400"></i>';
+        } else if (code >= 1 && code <= 3) {
+          description = "Partly Cloudy Skies";
+          iconMarkup = '<i data-lucide="cloud-sun" class="h-10 w-10 text-neutral-300"></i>';
+        } else if (code >= 45 && code <= 48) {
+          description = "Foggy Landscape Conditions";
+          iconMarkup = '<i data-lucide="cloud" class="h-10 w-10 text-neutral-400"></i>';
+        } else if (code >= 51 && code <= 67) {
+          description = "Light Drizzle / Rain (Watch out!)";
+          iconMarkup = '<i data-lucide="cloud-drizzle" class="h-10 w-10 text-blue-400"></i>';
+        } else if (code >= 71 && code <= 86) {
+          description = "Frost Advisory Conditions";
+          iconMarkup = '<i data-lucide="snowflake" class="h-10 w-10 text-sky-200"></i>';
+        } else if (code >= 95) {
+          description = "Severe Thunderstorms (Stop operations)";
+          iconMarkup = '<i data-lucide="cloud-lightning" class="h-10 w-10 text-rose-500"></i>';
+        }
+
+        tempEl.textContent = `${temp}°F`;
+        condEl.textContent = description;
+        humidityEl.textContent = `${humidity}%`;
+        windEl.textContent = `${wind} mph`;
+        rainEl.textContent = precip > 0 ? "Rainy" : "0%";
+        iconContainer.innerHTML = iconMarkup;
+        lucide.createIcons();
+
+      } catch (err) {
+        // Fallback simulated values if Offline / Rate-limited
+        tempEl.textContent = "78°F";
+        condEl.textContent = "Partly Cloudy Skies (Simulated)";
+        humidityEl.textContent = "65%";
+        windEl.textContent = "7 mph";
+        rainEl.textContent = "5%";
+        iconContainer.innerHTML = '<i data-lucide="cloud-sun" class="h-10 w-10 text-emerald-400"></i>';
+        lucide.createIcons();
+      }
+    }
+
+    // 3. Tasks Management
+    function initTasksManager() {
+      const taskForm = document.getElementById("task-form");
+      const titleInput = document.getElementById("task-input-title");
+      const descInput = document.getElementById("task-input-desc");
+      const dateInput = document.getElementById("task-input-date");
+      const tasksContainer = document.getElementById("tasks-container");
+      const counterEl = document.getElementById("task-counter");
+
+      // Set default date to today's date formatted
+      const todayString = new Date().toISOString().split('T')[0];
+      dateInput.value = todayString;
+
+      function renderTasks() {
+        tasksContainer.innerHTML = "";
+        
+        // Sorting: Incomplete first, then completed
+        const sortedTasks = [...state.tasks].sort((a,b) => a.completed - b.completed);
+        
+        const activeCount = state.tasks.filter(t => !t.completed).length;
+        counterEl.textContent = `${activeCount} remaining`;
+
+        if (sortedTasks.length === 0) {
+          tasksContainer.innerHTML = `
+            <div class="text-center py-10 text-neutral-400 text-sm italic">
+              No tasks logged. Enjoy your beautiful grass!
+            </div>
+          `;
+          return;
+        }
+
+        sortedTasks.forEach((task) => {
+          const taskDiv = document.createElement("div");
+          taskDiv.className = `flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border transition-all duration-200 gap-4 ${
+            task.completed ? "bg-emerald-950/10 border-emerald-500/10 opacity-60" : "bg-white/5 border-white/5 hover:bg-white/8"
+          }`;
+
+          taskDiv.innerHTML = `
+            <div class="flex items-start gap-3">
+              <button 
+                class="btn-toggle-task mt-1 text-neutral-400 hover:text-emerald-400 focus:outline-none transition-colors"
+                data-id="${task.id}"
+                aria-label="${task.completed ? "Mark incomplete" : "Mark complete"}"
+              >
+                <i data-lucide="${task.completed ? "check-square" : "square"}" class="h-5 w-5 ${task.completed ? "text-emerald-400" : ""}"></i>
+              </button>
+              
+              <div class="space-y-0.5">
+                <span class="text-sm font-semibold text-white ${task.completed ? "line-through text-neutral-500" : ""}">
+                  ${task.title}
+                </span>
+                ${task.description ? `<p class="text-xs text-neutral-400">${task.description}</p>` : ""}
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="flex items-center gap-1 text-[10px] text-neutral-400 font-medium">
+                    <i data-lucide="calendar" class="h-3 w-3"></i>
+                    ${task.dueDate}
+                  </span>
+                  <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded ${
+                    task.priority === "high" ? "bg-rose-500/10 text-rose-400" : 
+                    task.priority === "medium" ? "bg-amber-500/10 text-amber-400" : "bg-blue-500/10 text-blue-400"
+                  }">
+                    ${task.priority}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 self-end sm:self-auto">
+              <button 
+                class="btn-edit-task p-2 hover:bg-white/10 text-neutral-400 hover:text-white rounded-lg transition-all"
+                data-id="${task.id}"
+                aria-label="Edit task"
+              >
+                <i data-lucide="edit" class="h-4 w-4"></i>
+              </button>
+              <button 
+                class="btn-delete-task p-2 hover:bg-rose-500/10 text-neutral-400 hover:text-rose-400 rounded-lg transition-all"
+                data-id="${task.id}"
+                aria-label="Delete task"
+              >
+                <i data-lucide="trash-2" class="h-4 w-4"></i>
+              </button>
+            </div>
+          `;
+
+          tasksContainer.appendChild(taskDiv);
+        });
+
+        lucide.createIcons();
+        attachTaskEvents();
+      }
+
+      function attachTaskEvents() {
+        // Toggle Task Complete State
+        document.querySelectorAll(".btn-toggle-task").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            const task = state.tasks.find(t => t.id === id);
+            if (task) {
+              task.completed = !task.completed;
+              saveToStorage();
+              renderTasks();
+            }
+          });
+        });
+
+        // Delete Task Action
+        document.querySelectorAll(".btn-delete-task").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            state.tasks = state.tasks.filter(t => t.id !== id);
+            saveToStorage();
+            renderTasks();
+          });
+        });
+
+        // Edit Task (Inline Prompt Style)
+        document.querySelectorAll(".btn-edit-task").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-id");
+            const task = state.tasks.find(t => t.id === id);
+            if (task) {
+              const newTitle = prompt("Edit Task Title:", task.title);
+              if (newTitle !== null && newTitle.trim() !== "") {
+                task.title = newTitle.trim();
+                const newDesc = prompt("Edit Task Description:", task.description);
+                if (newDesc !== null) task.description = newDesc.trim();
+                saveToStorage();
+                renderTasks();
+              }
+            }
+          });
+        });
+      }
+
+      taskForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newTask = {
+          id: `task-${Date.now()}`,
+          title: titleInput.value.trim(),
+          description: descInput.value.trim(),
+          dueDate: dateInput.value,
+          priority: "medium", // Default prioritizer
+          completed: false,
+        };
+
+        state.tasks.push(newTask);
+        saveToStorage();
+        renderTasks();
+
+        // Reset Inputs
+        titleInput.value = "";
+        descInput.value = "";
+        dateInput.value = todayString;
+        titleInput.focus();
+      });
+
+      renderTasks();
+    }
+
+    // 4. Monthly Calendar Engine & Modular Interface
+    function initCalendarEngine() {
+      const monthIndicator = document.getElementById("calendar-month-indicator");
+      const daysContainer = document.getElementById("calendar-days");
+      
+      const btnPrev = document.getElementById("btn-prev-month");
+      const btnNext = document.getElementById("btn-next-month");
+
+      // Event Modal Setup
+      const eventModal = document.getElementById("event-modal");
+      const closeModalBtn = document.getElementById("btn-close-modal");
+      const modalDateTitle = document.getElementById("modal-selected-date");
+      const modalEventList = document.getElementById("modal-event-list");
+      const modalForm = document.getElementById("modal-event-form");
+      const modalTitleInput = document.getElementById("event-title-input");
+      const modalTimeInput = document.getElementById("event-time-input");
+      const modalColorInput = document.getElementById("event-color-input");
+
+      function renderCalendar() {
+        daysContainer.innerHTML = "";
+        
+        const year = state.currentDate.getFullYear();
+        const month = state.currentDate.getMonth();
+
+        // Month title
+        monthIndicator.textContent = state.currentDate.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+        // Get first day and number of days
+        const firstDayIndex = new Date(year, month, 1).getDay();
+        const lastDay = new Date(year, month + 1, 0).getDate();
+
+        // Get last month's final days to fill empty space
+        const prevLastDay = new Date(year, month, 0).getDate();
+
+        // Previous month padding days
+        for (let x = firstDayIndex; x > 0; x--) {
+          const dayNum = prevLastDay - x + 1;
+          const padBtn = document.createElement("div");
+          padBtn.className = "min-h-[75px] p-2 bg-neutral-950/20 border border-white/5 opacity-25 rounded-xl text-left text-xs font-semibold text-neutral-500";
+          padBtn.textContent = dayNum;
+          daysContainer.appendChild(padBtn);
+        }
+
+        // Current Month Days
+        const today = new Date();
+        for (let day = 1; day <= lastDay; day++) {
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+          const isTodayDate = today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
+
+          const dayEvents = state.calendarEvents.filter(e => e.date === dateStr);
+
+          const dayBtn = document.createElement("button");
+          dayBtn.type = "button";
+          dayBtn.className = `min-h-[75px] p-2 border text-left flex flex-col justify-between transition-all rounded-xl relative ${
+            isTodayDate 
+              ? "bg-emerald-500/10 border-emerald-500/50 hover:bg-emerald-500/20" 
+              : "bg-white/3 border-white/5 hover:bg-white/6"
+          }`;
+
+          dayBtn.innerHTML = `
+            <span class="text-xs font-bold ${isTodayDate ? "text-emerald-400" : "text-white"}">${day}</span>
+            <div class="space-y-1 w-full overflow-hidden mt-1">
+              ${dayEvents.slice(0, 2).map(ev => `
+                <div class="text-[9px] font-bold truncate rounded px-1 text-white border-l-2" style="background: rgba(255,255,255,0.06); border-color: ${ev.color};">
+                  ${ev.title}
+                </div>
+              `).join('')}
+              ${dayEvents.length > 2 ? `<span class="text-[8px] text-emerald-400 font-extrabold">+${dayEvents.length - 2} more</span>` : ""}
+            </div>
+          `;
+
+          // Click Day to Open Scheduler
+          dayBtn.addEventListener("click", () => {
+            state.selectedModalDate = dateStr;
+            openEventModal(dateStr, dayEvents);
+          });
+
+          daysContainer.appendChild(dayBtn);
+        }
+      }
+
+      function openEventModal(dateStr, dayEvents) {
+        modalDateTitle.textContent = new Date(dateStr + "T00:00:00").toLocaleDateString("en-US", { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        renderModalEvents(dayEvents);
+        eventModal.classList.remove("hidden");
+        modalTitleInput.focus();
+      }
+
+      function renderModalEvents(dayEvents) {
+        modalEventList.innerHTML = "";
+        if (dayEvents.length === 0) {
+          modalEventList.innerHTML = `<p class="text-xs text-neutral-400 italic">No scheduled jobs on this day.</p>`;
+          return;
+        }
+
+        dayEvents.forEach(ev => {
+          const evDiv = document.createElement("div");
+          evDiv.className = "flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5";
+          evDiv.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background: ${ev.color};"></span>
+              <span class="text-xs font-bold text-white">${ev.title}</span>
+              ${ev.time ? `<span class="text-[10px] text-neutral-400 tabular-nums">@ ${ev.time}</span>` : ""}
+            </div>
+            <button class="delete-event-btn text-neutral-400 hover:text-rose-400 p-1" data-id="${ev.id}">
+              <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+            </button>
+          `;
+
+          evDiv.querySelector(".delete-event-btn").addEventListener("click", () => {
+            state.calendarEvents = state.calendarEvents.filter(e => e.id !== ev.id);
+            saveToStorage();
+            renderCalendar();
+            // Re-render modal events list
+            const updated = state.calendarEvents.filter(e => e.date === state.selectedModalDate);
+            renderModalEvents(updated);
+          });
+
+          modalEventList.appendChild(evDiv);
+        });
+        lucide.createIcons();
+      }
+
+      // Add New Event Action via Modal Form
+      modalForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const newEv = {
+          id: `ev-${Date.now()}`,
+          title: modalTitleInput.value.trim(),
+          date: state.selectedModalDate,
+          time: modalTimeInput.value,
+          color: modalColorInput.value,
+        };
+
+        state.calendarEvents.push(newEv);
+        saveToStorage();
+        renderCalendar();
+
+        // Re-render modal list
+        const updated = state.calendarEvents.filter(e => e.date === state.selectedModalDate);
+        renderModalEvents(updated);
+
+        // Reset title input
+        modalTitleInput.value = "";
+        modalTitleInput.focus();
+      });
+
+      // Navigation controls
+      btnPrev.addEventListener("click", () => {
+        state.currentDate.setMonth(state.currentDate.getMonth() - 1);
+        renderCalendar();
+      });
+
+      btnNext.addEventListener("click", () => {
+        state.currentDate.setMonth(state.currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      closeModalBtn.addEventListener("click", () => {
+        eventModal.classList.add("hidden");
+        state.selectedModalDate = null;
+      });
+
+      // Close modal on escape keypress
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          eventModal.classList.add("hidden");
+          state.selectedModalDate = null;
+        }
+      });
+
+      renderCalendar();
+    }
+
+    // 5. Notes Autosave Section
+    function initNotesManager() {
+      const notesTextarea = document.getElementById("notes-textarea");
+      const statusEl = document.getElementById("notes-status");
+
+      notesTextarea.value = state.notes;
+
+      let saveTimeout;
+
+      notesTextarea.addEventListener("input", () => {
+        statusEl.textContent = "Typing...";
+        statusEl.className = "text-[10px] text-amber-400 font-semibold uppercase tracking-wider";
+
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+          state.notes = notesTextarea.value;
+          saveToStorage();
+          statusEl.textContent = "Saved";
+          statusEl.className = "text-[10px] text-emerald-400 font-semibold uppercase tracking-wider";
+        }, 1200); // Trigger save 1.2s after user stops typing
+      });
+    }
+
+    // Initialize application on load
+    window.addEventListener("DOMContentLoaded", () => {
+      loadFromStorage();
+      initializeAuth();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
